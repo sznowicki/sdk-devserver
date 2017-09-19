@@ -12,6 +12,7 @@ const prompt = require('readline-sync').question;
 const logger = require('../helpers/logger');
 const { projectPath, isSimpleRelease } = require('../helpers/environment');
 const exec = require('../helpers/exec');
+const { copyFiles } = require('../helpers/release');
 
 const prefix = logger.getShopgateCloudPrefix();
 const serverModules = resolve(__dirname, '..', 'node_modules');
@@ -52,8 +53,20 @@ if (!isSimpleRelease) {
   exec(`${serverModules}/.bin/babel ./ --out-dir ./dist --no-comments --ignore spec.js,spec.jsx,__snapshots__,.eslintrc.js,dist,coverage,node_modules`, projectPath);
 
   // Copy the package files.
-  logger.log(bold('\nCopy packages ...'));
-  exec('cp -rf package.json package-lock.json CHANGELOG.md LICENSE.md README.md ./dist', projectPath);
+  const copyCommand = copyFiles([
+    '.npmignore',
+    'package.json',
+    'package-lock.json',
+    'npm-shrinkwrap.json',
+    'CHANGELOG.md',
+    'LICENSE.md',
+    'README.md',
+  ], projectPath);
+
+  if (copyCommand) {
+    logger.log(bold('\nCopy packages ...'));
+    exec(copyCommand, projectPath);
+  }
 }
 
 const folderCommand = !isSimpleRelease ? 'cd ./dist && ' : '';
