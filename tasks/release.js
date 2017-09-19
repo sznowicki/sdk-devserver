@@ -12,6 +12,7 @@ const prompt = require('readline-sync').question;
 const logger = require('../helpers/logger');
 const { projectPath, isSimpleRelease } = require('../helpers/environment');
 const exec = require('../helpers/exec');
+const { copyFiles } = require('../helpers/release');
 
 const prefix = logger.getShopgateCloudPrefix();
 const serverModules = resolve(__dirname, '..', 'node_modules');
@@ -53,7 +54,15 @@ if (!isSimpleRelease) {
 
   // Copy the package files.
   logger.log(bold('\nCopy packages ...'));
-  exec('cp -rf package.json package-lock.json CHANGELOG.md LICENSE.md README.md ./dist', projectPath);
+  copyFiles([
+    '.npmignore',
+    'package.json',
+    'package-lock.json',
+    'npm-shrinkwrap.json',
+    'CHANGELOG.md',
+    'LICENSE.md',
+    'README.md',
+  ], projectPath);
 }
 
 const folderCommand = !isSimpleRelease ? 'cd ./dist && ' : '';
