@@ -49,6 +49,18 @@ exports.getAppSettings = () => {
 };
 
 /**
+ * Returns the app settings from the remote project.
+ * @return {Object} The app settings.
+ */
+exports.getComponentsSettings = () => {
+  try {
+    return requireUncached(`${projectPath}/config/components.json`);
+  } catch (e) {
+    return {};
+  }
+};
+
+/**
  * Returns the package json fole from the remote project.
  * @return {Object} package json contents.
  */

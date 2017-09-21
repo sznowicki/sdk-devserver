@@ -15,7 +15,7 @@ const prefix = conshelpers.getShopgateCloudPrefix();
 const logger = console;
 
 const extensions = {
-  'commerce-widgets': 'git@github.com:shopgate/commerce-widgets.git',
+  '@shopgate/commerce-widgets': 'git@github.com:shopgate/commerce-widgets.git',
   // 'core-tracking': 'ssh://git@stash.localdev.cc:7999/fe/tracking.git',
   // 'shopgate-tracking-ga-native': 'ssh://git@stash.localdev.cc:7999/sgx/shopgate-tracking-ga-native.git',
 };
@@ -127,7 +127,7 @@ const addExtension = (name, callback) => {
  * Runs the extensions setup.
  * @param {Function} callback Is called at the end of the setup.
  */
-const setup = (callback = () => {}) => {
+const setupExtensions = (callback = () => {}) => {
   // Add a new extension from cli option.
   if (process.argv[2] && process.argv[2].indexOf('--') === -1) {
     addExtension(process.argv[2]);
@@ -149,4 +149,4 @@ const setup = (callback = () => {}) => {
   });
 };
 
-module.exports = setup;
+module.exports = setupExtensions;
