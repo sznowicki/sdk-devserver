@@ -10,7 +10,8 @@ const { bold, green } = require('chalk');
 const logger = require('../helpers/logger');
 const { projectPath, isSimpleRelease } = require('../helpers/environment');
 const exec = require('../helpers/exec');
-const { copyFiles, bumpVersion } = require('../helpers/release');
+const bumpVersion = require('../helpers/release/bumpVersion');
+const copyFiles = require('../helpers/release/copyFiles');
 const pkg = require('../helpers/app').getPackageSettings();
 
 const prefix = logger.getShopgateCloudPrefix();
