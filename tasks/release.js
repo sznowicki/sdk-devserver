@@ -22,7 +22,13 @@ logger.log('\n');
 logger.log(`${prefix} ${bold('Performing release process!')}`);
 logger.log('\n');
 
-const [bumpVersionCommand, versionInput] = bumpVersion();
+const bumpOutput = bumpVersion();
+
+if (!bumpOutput) {
+  process.exit(1);
+}
+
+const [bumpVersionCommand, versionInput] = bumpOutput;
 
 if (bumpVersionCommand) {
   // Change the package version.
