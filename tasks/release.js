@@ -13,6 +13,7 @@ const exec = require('../helpers/exec');
 const bumpVersion = require('../helpers/release/bumpVersion');
 const copyFiles = require('../helpers/release/copyFiles');
 const pkg = require('../helpers/app').getPackageSettings();
+const { ENV_KEY_PRODUCTION } = require('../constants');
 
 const prefix = logger.getShopgateCloudPrefix();
 const serverModules = resolve(__dirname, '..', 'node_modules');
@@ -30,6 +31,8 @@ if (bumpVersionCommand) {
 }
 
 if (!isSimpleRelease) {
+  process.env.NODE_ENV = ENV_KEY_PRODUCTION;
+
   // Clean up the previous release.
   logger.log(bold('Cleaning up ...'));
   exec(`${serverModules}/.bin/rimraf ./dist`, projectPath);
