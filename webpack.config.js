@@ -160,7 +160,11 @@ const cacheEntry = (isStaging || isProd) ? [
 const performance = (isDev) ? [
   resolve(__dirname, 'modules', 'performance'),
 ] : [];
-
+/**
+ * Gets the source map mode which should be used within
+ * the webpack config.
+ * @return {string}
+ */
 const getSourceMapType = () => {
   if (sourcemap) {
     return sourcemap;
