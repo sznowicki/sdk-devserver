@@ -5,8 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const { readFileSync } = require('fs');
-const { resolve } = require('path');
 const requireUncached = require('require-uncached');
 const { projectPath } = require('../environment');
 
@@ -21,26 +19,6 @@ exports.getRemoteWebpackConfig = () => {
     return requireUncached(`${projectPath}/webpack.config`);
   } catch (e) {
     return null;
-  }
-};
-
-/**
- * Returns a babel configuration. Checks if there is a .babelrc in the remote directory
- * of the current project and returns this. Otherwise it uses the pre-defined .babelrc
- * from this repository.
- * @return {Object} A babel configuration.
- */
-exports.getBabelConfig = () => {
-  try {
-    const projectBabel = readFileSync(`${projectPath}/.babelrc`);
-    return JSON.parse(projectBabel);
-  } catch (e) {
-    try {
-      const serverBabel = readFileSync(resolve(__dirname, '../.babelrc'));
-      return JSON.parse(serverBabel);
-    } catch (e2) {
-      return {};
-    }
   }
 };
 

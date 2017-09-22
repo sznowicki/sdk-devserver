@@ -15,12 +15,12 @@ const { resolve } = require('path');
  * @param {string} [destinationPath='./dist'] The path copy the files based on the rootPath.
  * @return {string|null}
  */
-exports.copyFiles = (files, rootPath, destinationPath = './dist') => {
+module.exports = function copyFiles(files, rootPath, destinationPath = './dist') {
   if (files.length === 0) {
     return null;
   }
 
-  const copyFiles = files.map((file) => {
+  const fileCollection = files.map((file) => {
     if (existsSync(resolve(rootPath, file))) {
       return file;
     }
@@ -32,8 +32,8 @@ exports.copyFiles = (files, rootPath, destinationPath = './dist') => {
     return '';
   });
 
-  if (copyFiles.join(' ').trim().length > 0) {
-    return `cp -rf ${copyFiles.join(' ')} ${destinationPath}`;
+  if (fileCollection.join(' ').trim().length > 0) {
+    return `cp -rf ${fileCollection.join(' ')} ${destinationPath}`;
   }
 
   return null;
