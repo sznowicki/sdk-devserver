@@ -8,7 +8,10 @@
 const chalk = require('chalk');
 const moment = require('moment');
 const ip = require('ip');
-const { ENV } = require('./environment');
+const {
+  ENV,
+  silent,
+} = require('./environment');
 
 /**
  * Logger.
@@ -26,6 +29,13 @@ class Logger {
     this.prefixDocs = chalk.magenta.bold('docs');
   }
 
+  /**
+   * Checks if logger can output.
+   * @return {boolean}
+   */
+  canOutput() {
+    return this.isDev() && !silent;
+  }
   /**
    * Checks if in development mode.
    * @returns {boolean}
@@ -79,7 +89,7 @@ class Logger {
    * @param {*} err The error to log.
    */
   error(err) {
-    if (!this.isDev()) {
+    if (!this.canOutput()) {
       return;
     }
 
@@ -91,7 +101,7 @@ class Logger {
    * @param {*} msg The message to log.
    */
   info(msg) {
-    if (!this.isDev()) {
+    if (!this.canOutput()) {
       return;
     }
 
@@ -103,7 +113,7 @@ class Logger {
    * @param {*} msg The message to log.
    */
   warn(msg) {
-    if (!this.isDev()) {
+    if (!this.canOutput()) {
       return;
     }
 
@@ -115,7 +125,7 @@ class Logger {
    * @param {*} msg The message to log.
    */
   log(msg) {
-    if (!this.isDev()) {
+    if (!this.canOutput()) {
       return;
     }
 
