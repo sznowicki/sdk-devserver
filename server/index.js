@@ -14,7 +14,7 @@ const { resolve } = require('path');
 const { json, urlencoded } = require('body-parser');
 const logger = require('../helpers/logger');
 const { setContentTypeHeaders, setCrossOriginHeaders, getDevConfig } = require('../helpers/app');
-const { isDev, isStaging, isProd, projectPath } = require('../helpers/environment');
+const { isDev, isStaging, isProd, projectPath, silent } = require('../helpers/environment');
 const { logErrors, xhrErrorHandler, errorHandler } = require('../helpers/error');
 const setupExtensions = require('../extensions/setup');
 const extensionIndexWatcher = require('../extensions');
@@ -40,8 +40,9 @@ app.use(xhrErrorHandler);
 app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(compression());
-app.use(morgan('dev'));
-
+if (!silent) {
+  app.use(morgan('dev'));
+}
 if (isStaging || isProd) {
   // Add static files rule on production and staging.
   app.use('/static', expressStaticGzip(resolve(projectPath, 'public')));

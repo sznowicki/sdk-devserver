@@ -161,6 +161,15 @@ const performance = (isDev) ? [
   resolve(__dirname, 'modules', 'performance'),
 ] : [];
 
+const getSourceMapType = () => {
+  if (sourcemap) {
+    return sourcemap;
+  }
+  if (isDev) {
+    return 'eval';
+  }
+  return 'source-map';
+};
 /**
  * WEBPACK CONFIG
  */
@@ -190,7 +199,7 @@ const config = {
     path: resolve(projectPath, 'public'),
     publicPath: publicPath || ((isStaging || isProd) ? './' : '/static/'),
   },
-  devtool: sourcemap || isDev ? 'eval' : 'source-map',
+  devtool: getSourceMapType(),
   module: {
     rules: [
       {
