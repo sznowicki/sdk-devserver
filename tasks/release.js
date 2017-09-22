@@ -6,42 +6,27 @@
  */
 
 const { resolve } = require('path');
-const { readFileSync } = require('fs');
 const { bold, green } = require('chalk');
-const prompt = require('readline-sync').question;
 const logger = require('../helpers/logger');
 const { projectPath, isSimpleRelease } = require('../helpers/environment');
 const exec = require('../helpers/exec');
-const { copyFiles } = require('../helpers/release');
+const { copyFiles, bumpVersion } = require('../helpers/release');
+const pkg = require('../helpers/app').getPackageSettings();
 
 const prefix = logger.getShopgateCloudPrefix();
 const serverModules = resolve(__dirname, '..', 'node_modules');
-const pkg = JSON.parse(readFileSync(resolve(projectPath, 'package.json')));
-const packageVersion = pkg.version;
 
 logger.log('\n');
 logger.log(`${prefix} ${bold('Performing release process!')}`);
 logger.log('\n');
 
-// Request a new version.
-const versionInput = prompt(`Next version (current version is ${packageVersion})? `);
+const [bumpVersionCommand, versionInput] = bumpVersion();
 
-// Validate the new version.
-const validVersion = /^([0-9].[0-9].[0-9])+$|^([0-9].[0-9].[0-9])(.*(-))(.*(alpha)|(beta))([0-9])+$/.test(versionInput);
-if (!validVersion) {
-  logger.error('\nSORRY! The version number was not valid. Please try again.\n');
-  process.exit(1);
+if (bumpVersionCommand) {
+  // Change the package version.
+  logger.log(bold('Changing package version ...'));
+  exec(bumpVersionCommand, projectPath);
 }
-
-// Is it a new version??
-if (versionInput === packageVersion) {
-  logger.error(`\nERROR: The version '${versionInput}' already exists. Please try again.\n`);
-  process.exit(1);
-}
-
-// Change the package version.
-logger.log(bold('Changing package version ...'));
-exec(`npm version ${versionInput}`, projectPath);
 
 if (!isSimpleRelease) {
   // Clean up the previous release.
