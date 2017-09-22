@@ -6,44 +6,40 @@
  */
 
 const { resolve } = require('path');
-const { readFileSync } = require('fs');
 const { bold, green } = require('chalk');
-const prompt = require('readline-sync').question;
 const logger = require('../helpers/logger');
 const { projectPath, isSimpleRelease } = require('../helpers/environment');
 const exec = require('../helpers/exec');
-const { copyFiles } = require('../helpers/release');
+const bumpVersion = require('../helpers/release/bumpVersion');
+const copyFiles = require('../helpers/release/copyFiles');
+const pkg = require('../helpers/app').getPackageSettings();
+const { ENV_KEY_PRODUCTION } = require('../constants');
 
 const prefix = logger.getShopgateCloudPrefix();
 const serverModules = resolve(__dirname, '..', 'node_modules');
-const pkg = JSON.parse(readFileSync(resolve(projectPath, 'package.json')));
-const packageVersion = pkg.version;
 
 logger.log('\n');
 logger.log(`${prefix} ${bold('Performing release process!')}`);
 logger.log('\n');
 
-// Request a new version.
-const versionInput = prompt(`Next version (current version is ${packageVersion})? `);
+const bumpOutput = bumpVersion();
 
-// Validate the new version.
-const validVersion = /^([0-9].[0-9].[0-9])+$|^([0-9].[0-9].[0-9])(.*(-))(.*(alpha)|(beta))([0-9])+$/.test(versionInput);
-if (!validVersion) {
-  logger.error('\nSORRY! The version number was not valid. Please try again.\n');
+if (!bumpOutput) {
   process.exit(1);
 }
 
-// Is it a new version??
-if (versionInput === packageVersion) {
-  logger.error(`\nERROR: The version '${versionInput}' already exists. Please try again.\n`);
-  process.exit(1);
-}
+const bumpVersionCommand = bumpOutput[0];
+const versionInput = bumpOutput[1];
 
-// Change the package version.
-logger.log(bold('Changing package version ...'));
-exec(`npm version ${versionInput}`, projectPath);
+if (bumpVersionCommand) {
+  // Change the package version.
+  logger.log(bold('Changing package version ...'));
+  exec(bumpVersionCommand, projectPath);
+}
 
 if (!isSimpleRelease) {
+  process.env.NODE_ENV = ENV_KEY_PRODUCTION;
+
   // Clean up the previous release.
   logger.log(bold('Cleaning up ...'));
   exec(`${serverModules}/.bin/rimraf ./dist`, projectPath);

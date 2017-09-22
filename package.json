@@ -1,6 +1,6 @@
 {
   "name": "@shopgate/sdk-devserver",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "The development server for a Shopgate Cloud PWA project.",
   "main": "index.js",
   "repository": "shopgate/sdk-devserver",
@@ -15,6 +15,7 @@
     "production": "webpack --config ./webpack.config.js",
     "precommit": "lint-staged",
     "test": "jest",
+    "test:watch": "jest --coverage --watch --no-cache",
     "coverage": "jest --coverage"
   },
   "lint-staged": {
