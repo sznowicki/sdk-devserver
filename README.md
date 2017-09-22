@@ -118,6 +118,23 @@ processes. Without the corresponding server-side backend, this will NOT be usefu
 ```
 ~/ sgcloud --production
 ```
+### `--sourcemap`
+
+Additional argument to make the webpack use the style of source mapping of your choice. For more information check the [webpack documentation](https://webpack.js.org/configuration/devtool/).
+
+#### Usage:
+```
+~/ sgcloud --sourcemap=cheap-eval-source-map
+```
+
+### `--silent`
+
+This argument would suppress most logs outputted to the console.
+
+#### Usage:
+```
+~/ sgcloud --silent
+```
 
 ## Customization
 
