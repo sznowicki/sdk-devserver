@@ -18,6 +18,7 @@ const {
   isRemote,
   isAnalyze,
   projectPath,
+  sourcemap,
 } = require('./helpers/environment');
 const { publicPath, language, shopName } = require('./helpers/app').getAppSettings();
 const { ip, port } = require('./helpers/app').getDevConfig();
@@ -189,7 +190,7 @@ const config = {
     path: resolve(projectPath, 'public'),
     publicPath: publicPath || ((isStaging || isProd) ? './' : '/static/'),
   },
-  devtool: isDev ? 'eval' : 'source-map',
+  devtool: sourcemap || isDev ? 'eval' : 'source-map',
   module: {
     rules: [
       {

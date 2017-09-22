@@ -55,4 +55,5 @@ module.exports = {
   isLink: !!argv.link,
   isAnalyze: !!argv.analyze,
   projectPath: (process.env.PROJECT_PATH || process.cwd()),
+  sourcemap: argv.sourcemap || null,
 };
