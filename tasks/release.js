@@ -28,7 +28,8 @@ if (!bumpOutput) {
   process.exit(1);
 }
 
-const [bumpVersionCommand, versionInput] = bumpOutput;
+const bumpVersionCommand = bumpOutput[0];
+const versionInput = bumpOutput[1];
 
 if (bumpVersionCommand) {
   // Change the package version.
