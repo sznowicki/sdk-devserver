@@ -23,7 +23,7 @@ if (argv.test) {
   process.env.NODE_ENV = ENV_KEY_TEST;
 }
 
-if (argv.production) {
+if (argv.production || argv.release || argv['release-simple']) {
   process.env.NODE_ENV = ENV_KEY_PRODUCTION;
 }
 
