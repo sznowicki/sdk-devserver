@@ -15,6 +15,7 @@
     "production": "webpack --config ./webpack.config.js",
     "precommit": "lint-staged",
     "test": "jest",
+    "test:watch": "jest --coverage --watch --no-cache",
     "coverage": "jest --coverage"
   },
   "lint-staged": {
