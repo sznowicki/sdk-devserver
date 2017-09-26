@@ -189,7 +189,7 @@ const config = {
     path: resolve(projectPath, 'public'),
     publicPath: publicPath || ((isStaging || isProd) ? './' : '/static/'),
   },
-  devtool: isDev ? 'eval' : 'source-map',
+  devtool: isDev ? 'cheap-eval-source-map' : 'cheap-source-map',
   module: {
     rules: [
       {
