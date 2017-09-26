@@ -170,9 +170,9 @@ const getSourceMapType = () => {
     return sourcemap;
   }
   if (isDev) {
-    return 'eval';
+    return 'cheap-eval-source-map';
   }
-  return 'source-map';
+  return 'cheap-source-map';
 };
 /**
  * WEBPACK CONFIG

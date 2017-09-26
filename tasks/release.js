@@ -46,7 +46,7 @@ if (!isSimpleRelease) {
 
   // Transpile the scripts.
   logger.log(bold('Processing files ...\n'));
-  exec(`${serverModules}/.bin/babel ./ --out-dir ./dist --no-comments --ignore spec.js,spec.jsx,__snapshots__,.eslintrc.js,dist,coverage,node_modules`, projectPath);
+  exec(`${serverModules}/.bin/babel ./ --out-dir ./dist --no-comments --ignore tests,spec.js,spec.jsx,__snapshots__,.eslintrc.js,jest.config.js,dist,coverage,node_modules`, projectPath);
 
   // Copy the package files.
   const copyCommand = copyFiles([
