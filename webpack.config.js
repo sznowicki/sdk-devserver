@@ -18,11 +18,11 @@ const {
   isRemote,
   isAnalyze,
   projectPath,
-  sourcemap,
 } = require('./helpers/environment');
 const { publicPath, language, shopName } = require('./helpers/app').getAppSettings();
 const { ip, port } = require('./helpers/app').getDevConfig();
 const { getRemoteWebpackConfig, convertLanguageToISO } = require('./helpers/webpack');
+const getSourceMapType = require('./helpers/webpack/getSourceMapType');
 
 /**
  * LANGUAGE
@@ -160,20 +160,6 @@ const cacheEntry = (isStaging || isProd) ? [
 const performance = (isDev) ? [
   resolve(__dirname, 'modules', 'performance'),
 ] : [];
-/**
- * Gets the source map mode which should be used within
- * the webpack config.
- * @return {string}
- */
-const getSourceMapType = () => {
-  if (sourcemap) {
-    return sourcemap;
-  }
-  if (isDev) {
-    return 'cheap-eval-source-map';
-  }
-  return 'cheap-source-map';
-};
 /**
  * WEBPACK CONFIG
  */
