@@ -160,6 +160,7 @@ const cacheEntry = (isStaging || isProd) ? [
 const performance = (isDev) ? [
   resolve(__dirname, 'modules', 'performance'),
 ] : [];
+
 /**
  * WEBPACK CONFIG
  */
