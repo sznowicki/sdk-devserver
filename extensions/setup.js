@@ -16,8 +16,7 @@ const logger = console;
 
 const extensions = {
   '@shopgate/commerce-widgets': 'git@github.com:shopgate/commerce-widgets.git',
-  // 'core-tracking': 'ssh://git@stash.localdev.cc:7999/fe/tracking.git',
-  // 'shopgate-tracking-ga-native': 'ssh://git@stash.localdev.cc:7999/sgx/shopgate-tracking-ga-native.git',
+  '@shopgate/tracking-ga-native': 'git@github.com:shopgate/tracking-ga-native.git',
 };
 const extensionsPath = resolve(projectPath, 'extensions');
 
@@ -94,7 +93,7 @@ const checkOut = (name, repo, callback) => {
     logger.log(`${prefix} Initializing extension '${name}'. Please wait ...`);
 
     exec('npm i', {
-      cwd: dir,
+      cwd: join(dir, 'frontend'),
     }, (error2, stdout2) => {
       if (error2) {
         logger.log(stdout2);
