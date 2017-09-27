@@ -21,8 +21,8 @@ module.exports = () => {
   }
 
   if (isDev) {
-    return 'cheap-eval-source-map';
+    return 'cheap-module-eval-source-map';
   }
 
-  return 'cheap-source-map';
+  return 'cheap-module-source-map';
 };
