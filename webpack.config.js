@@ -21,7 +21,11 @@ const {
 } = require('./helpers/environment');
 const { publicPath, language, shopName } = require('./helpers/app').getAppSettings();
 const { ip, port } = require('./helpers/app').getDevConfig();
-const { getRemoteWebpackConfig, convertLanguageToISO } = require('./helpers/webpack');
+const {
+  getRemoteWebpackConfig,
+  convertLanguageToISO,
+  getExtensionsNodeModulesPaths,
+} = require('./helpers/webpack');
 
 /**
  * LANGUAGE
@@ -237,6 +241,7 @@ const config = {
     modules: [
       resolve(projectPath, 'node_modules'),
       resolve(__dirname, 'node_modules'),
+      ...getExtensionsNodeModulesPaths(),
     ],
   },
   plugins,
