@@ -10,6 +10,7 @@ const { resolve } = require('path');
 const chalk = require('chalk');
 const camelCase = require('lodash/camelCase');
 const upperFirst = require('lodash/upperFirst');
+const { isDev } = require('../helpers/environment');
 const configs = require('../helpers/app').getComponentsSettings();
 
 const logger = console;
@@ -28,6 +29,7 @@ const getExtensionIndex = (moduleConfig) => {
 
     Object.keys(config).forEach((widgetId) => {
       const component = config[widgetId];
+      const componentPath = isDev ? component.path.replace('/dist/', '/src/') : component.path;
 
       /**
        * The variable name to be used in import and export statement.
@@ -40,7 +42,7 @@ const getExtensionIndex = (moduleConfig) => {
       logger.log(` indexing '${chalk.bold(widgetId)}'`);
 
       // Add the component to the imports.
-      imports.push(`import ${componentVariableName} from './${component.path}';`);
+      imports.push(`import ${componentVariableName} from './${componentPath}';`);
       // Add the component to the exported object.
       exports.push(`  '${widgetId}': ${componentVariableName},`);
     });
