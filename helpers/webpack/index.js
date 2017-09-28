@@ -5,8 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+const { join } = require('path');
 const requireUncached = require('require-uncached');
 const { projectPath } = require('../environment');
+const { extensions } = require('../app').getAppSettings();
 
 /**
  * Returns a webpack config. Checks if there is a webpack config in the remote directory
@@ -21,6 +23,14 @@ exports.getRemoteWebpackConfig = () => {
     return null;
   }
 };
+
+/**
+ * Returns the node modules paths to all extensions.
+ * @return {Array}
+ */
+exports.getExtensionsNodeModulesPaths = () => (
+  extensions.map(name => join(projectPath, 'extensions', name, 'frontend', 'node_modules'))
+);
 
 /**
  * Converts a lowercase language key to ISO conform lower-uppercase.
