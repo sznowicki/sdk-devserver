@@ -1,8 +1,8 @@
 # Shopgate Cloud SDK Development Server
 
-![](https://travis-ci.org/shopgate/sdk-devserver.svg?branch=development)
+[![Travis CI Build](https://travis-ci.org/shopgate/sdk-devserver.svg?branch=master)](https://travis-ci.org/shopgate/sdk-devserver)
 [![GitHub release](https://img.shields.io/github/release/shopgate/sdk-devserver.svg)]()
-[![Coverage Status](https://coveralls.io/repos/github/shopgate/sdk-devserver/badge.svg?branch=development)](https://coveralls.io/github/shopgate/sdk-devserver?branch=development)
+[![Coverage Status](https://coveralls.io/repos/github/shopgate/sdk-devserver/badge.svg?branch=master)](https://coveralls.io/github/shopgate/sdk-devserver?branch=master)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 The development server for your **Shopgate Cloud App** themes.
