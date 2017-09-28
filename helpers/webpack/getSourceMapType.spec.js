@@ -25,20 +25,20 @@ describe('Helpers: webpack - getSourceMapType()', () => {
     const getSourceMapType = require('./getSourceMapType');  // eslint-disable-line global-require
     expect(getSourceMapType()).toBe('foo');
   });
-  it('should return cheap-eval-source-map for development stage', () => {
+  it('should return correct source map style for development stage', () => {
     jest.doMock(('../environment'), () => ({
       isDev: true,
       sourcemap: null,
     }));
     const getSourceMapType = require('./getSourceMapType'); // eslint-disable-line global-require
-    expect(getSourceMapType()).toBe('cheap-eval-source-map');
+    expect(getSourceMapType()).toBe('cheap-module-eval-source-map');
   });
-  it('should return cheap-source-map for development stage', () => {
+  it('should return correct source map style for production stage', () => {
     jest.doMock(('../environment'), () => ({
       isDev: false,
       sourcemap: null,
     }));
     const getSourceMapType = require('./getSourceMapType'); // eslint-disable-line global-require
-    expect(getSourceMapType()).toBe('cheap-source-map');
+    expect(getSourceMapType()).toBe('cheap-module-source-map');
   });
 });
